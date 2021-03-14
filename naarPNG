@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+shopt -s nullglob globstar
+
+for i in $1*."jpg" ; do                     #Voor elk bestand waarvan de naam eindigt op .jpg 
+    convert $i -resize 128x128\> $i         #Converteer de grootte van het bestand naar 128 bij 128 pixels
+    convert "$i" "${i%.*}.png"              #En converteer het aangepaste bestand van een .jpg bestand naar een .png bestand
+done

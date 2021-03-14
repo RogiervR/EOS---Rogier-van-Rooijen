@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+case $1 in      #Checkt meegegeven bestand
+
+*.py)           #Als de naam van bestand eindigt op .py
+python3 $1      #dan wordt het python bestand uitgevoerd in python
+;;
+
+*.sh)           #Als de naam van het bestand eindigt op .sh
+bash $1         #dan wordt het bash script bestand uitgevoerd in bash (oftewel de console)
+;;
+
+*.cc)           #Als de naam van het bestand eindigt op .cc
+cat $1          #dan wordt het C++ bestand uitgevoerd met het bash commando cat
+;;
+
+*) echo "Filetype kan niet worden gebruikt."        #Als de naam van het bestand op geen van deze file types eindigt dan geeft deze een foutmelding in de console weer
+;;
+
+esac

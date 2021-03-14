@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+mkdir -p Afbeeldingen                   #Maakt een map "Afbeeldingen" aan
+
+shopt -s nullglob globstar
+
+for i in $1/**/*.{png,jpg} ; do         #Voor de meegegeven map checkt de code op .png en .jpg bestanden
+    mv -f $i Afbeeldingen               #vervolgens worden deze .png en .jpg bestanden allemaal in de nieuwe map "Afbeeldingen" gestopt.
+done

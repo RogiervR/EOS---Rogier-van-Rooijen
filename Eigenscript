@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+shopt -s nullglob globstar
+
+echo "Alle JPG afbeeldingen in deze map worden hier weegegeven in de console!"      #Print twee berichten voor de gebruiker over hoe de code werkt
+echo "Druk Ctrl+L nadat je de trein heb gezien :)."
+sleep 3                                                                             #Wacht 3 seconden voordat de rest uitgevoerd wordt
+
+for i in $1/*."jpg" ; do                                                            #Kijkt voor elk bestand waarvan de naam eindigd op .jpg
+    echo $i                                                                         #Print het gegeven bestand in de console
+    /usr/bin/timeout -s 9 --foreground 5 asciiview "$i" -driver curses              #Laat per plaatje uit meegegeven map verschijnen op de console in vorm van Ascii waardes getekend.
+done                                                                                #met 9 seconden tussen elk plaatje
+
+xdotool key Return                                                                  #Voert toetscommando in om uit de Ascii weergave te stappen
+sleep 1                                                                             #Wacht 1 seconde
+reset                                                                               #reset de console
+clear                                                                               #Cleart de console 
+sl                                                                                  #Print een bewegende trein in de console
+clear                                                                               #Cleart de console nogmaals
+echo -en "\e[3J"                                                                    #Echo om console te clearen
+
+## LEES DIT ##
+#Sluit niet correct af, samen gekeken naar oplossing maar buffer blijft resteren tot dat er op een toets wordt gedrukt.

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+#Maakt een map "Afbeeldingen" aan
+mkdir -p Afbeeldingen                   
+
+shopt -s nullglob globstar
+
+#Zoekt bij meegegeven map naar bestanden met de naam die eindigt op .png of .jpg en verplaatst deze naar de nieuwe map "Afbeeldingen"
+find $1 -type f \( -name "*.png" -o -name "*.jpg" \) -exec mv "{}" Afbeeldingen \;        
+

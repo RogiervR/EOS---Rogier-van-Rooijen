@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+rm -f $3                #Verwijderd het orginele meegegeven bestand voor de logfile zodat deze geupdate kan worden
+
+for i in $1/* ; do                                                                      #Voor elk bestand in de meegegeven map
+    $2 $i >/dev/null                                                                    #Kijkt voor het meegegeven commando of deze op het bestand uitgevoerd kan worden.
+    echo "bestand:  $i                                       status:  $?" >> $3         #Schrijft de directory met bestandsnaam en de status of het het commando gelukt is in de logfile
+done
+

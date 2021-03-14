@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+rm -f $1            #Verwijderd de orginele versie van de password file zodat deze geupdate kan worden
+
+echo -n "Geef je gebruikersnaam: ";             #Vraagt om een gebruikersnaam
+read gebruikersnaam;                            #Zet gebruikersnaam in variabele gebruikersnaam
+if [ "$gebruikersnaam" == "" ]; then            #Als gebruikersnaam leeg is dan
+    gebruikersnaam=$(whoami);                   #Stel gebruikersnaam gelijk aan de naam van het systeem
+fi
+echo je gebruikersnaam is: $gebruikersnaam;     #Print je gegeven gebruikersnaam in de console
+
+echo -n "Geef je wachtwoord: ";                 #Vraagt om een wachtwoord
+read wachtwoord;                                #Zet wachtwoord in variabele wachtwoord
+
+while test ${#wachtwoord} -lt 8  ; do                                                       #Kijkt of het wachtwoord langer dan 8 karakters lang is
+    echo -n "uw wachtwoord is korter dan 8 karakters, geef een nieuw wachtwoord: ";         #Als het korter is blijft de code om een nieuw wachtwoord vragen totdat deze aan de eisen voldoet
+    read wachtwoord;                                                                        #Zet wachtwoord in variabele wachtwoord
+    if test ${#wachtwoord} -gt 7 ; then                                                     #Als wachtwoord groter is dan 7 karakters dan stopt de code met een nieuw wachtwoord vragen
+        break;                                                                              #Stopt while loop
+    fi
+done
+
+echo -n "Herhaal uw wachtwoord: ";                                                          #Vraagt nogmaals om hetzelfde wachtwoord in te voeren voor controle
+read wachtwoord2;                                                                           #Zet het controle wachtwoord in variabele wachtwoord2
+
+while [ $wachtwoord != $wachtwoord2 ] ; do                                                  #Kijkt of het orginele wachtwoord en het controle wachtwoord hetzelfde zijn
+    echo -n "Uw wachtwoord komt niet overeen, probeer het opnieuw: ";                       #Zo niet, dan wordt er opnieuw gevraagd om het wachtwoord ter controle in te vullen
+    read wachtwoord2;                                                                       #Zet het controle wachtwoord in variabele wachtwoord2
+    if [ $wachtwoord == $wachtwoord2 ] ; then                                               #Zodra de twee wachtwoorden indentiek zijn stopt de code met vragen om herhaling van uw wachtwoord
+        break;                                                                              #Stopt while loop
+    fi
+done
+
+wachtwoord_hash="$(echo -n "$wachtwoord" | md5sum | cut -d"-" -f1 - )"                      #Maakt een gehaste versie van het wachtwoord zodat deze niet makkelijk afgelezen kan worden
+echo "Gebruikersnaam:   $gebruikersnaam" >> $1                                              #Schrijft geven gebruikersnaam in meegegeven Inlogbestand
+echo "wachtwoord in hashcode:   $wachtwoord_hash"  >> $1                                    #Schrijft geven wachtwoord in de gehaste versie in meegegeven Inlogbestand
